@@ -1,0 +1,64 @@
+---
+title: Evaluating Databricks Genie Spaces
+---
+
+import TileCard from "@site/src/components/TileCard";
+import TilesGrid from "@site/src/components/TilesGrid";
+import FeatureHighlights from "@site/src/components/FeatureHighlights";
+import { Database, Scale, Wrench } from "lucide-react";
+
+# Evaluating Databricks Genie Spaces
+
+A complete pipeline for ingesting, evaluating, and improving a Databricks Genie space using MLflow. These cookbooks walk through tracing Genie conversations, running automated and human evaluation, and generating actionable space improvements.
+
+## What You'll Build
+
+<FeatureHighlights
+  features={[
+    { icon: Database, title: "Conversation tracing", description: "Pull Genie conversations into Delta and trace each interaction with MLflow for observability." },
+    { icon: Scale, title: "Multi-layer evaluation", description: "Run built-in judges, custom LLM judges, and code-based scorers, then route failures to human reviewers." },
+    { icon: Wrench, title: "Space improvements", description: "Generate and auto-apply SQL expressions, text instructions, and benchmarks from human feedback." },
+  ]}
+/>
+
+## Cookbooks
+
+<TilesGrid>
+  <TileCard
+    icon={Database}
+    title="Conversation Tracing Pipeline"
+    description="Pull conversations from a Genie space, store them incrementally in a Delta table, and trace each interaction with MLflow."
+    href="/genai/cookbooks/databricks-genie/notebooks/tracing-pipeline"
+    linkText="View cookbook →"
+  />
+  <TileCard
+    icon={Scale}
+    title="Evaluation with LLM Judges"
+    description="Run three layers of automated evaluation on Genie traces and route flagged traces to human reviewers via labeling sessions."
+    href="/genai/cookbooks/databricks-genie/notebooks/evaluation-judges"
+    linkText="View cookbook →"
+  />
+  <TileCard
+    icon={Wrench}
+    title="Space Improvement Generator"
+    description="Audit a Genie space configuration, generate concrete fixes from human feedback, and optionally auto-apply them."
+    href="/genai/cookbooks/databricks-genie/notebooks/space-analyzer"
+    linkText="View cookbook →"
+  />
+</TilesGrid>
+
+## Pipeline Overview
+
+| Step | Cookbook | What it does |
+|------|---------|-------------|
+| 1 | [Tracing Pipeline](/genai/cookbooks/databricks-genie/notebooks/tracing-pipeline) | Ingests Genie conversations into Delta with MERGE deduplication, then creates MLflow traces with spans for text-to-SQL, execution, and response generation. |
+| 2 | [Evaluation with LLM Judges](/genai/cookbooks/databricks-genie/notebooks/evaluation-judges) | Runs built-in judges (relevance, safety, groundedness), custom LLM judges, and code-based scorers on traces. Flags failures and creates a labeling session for human review. |
+| 3 | [Space Improvement Generator](/genai/cookbooks/databricks-genie/notebooks/space-analyzer) | Collects human feedback, extracts the Genie space config, inspects Unity Catalog metadata, and generates structured recommendations (SQL expressions, text instructions, benchmarks) that can be auto-applied. |
+
+:::tip[Prerequisites]
+All cookbooks in this series require:
+```bash
+pip install databricks-sdk mlflow>=3.1.0
+```
+They run on Databricks and require a Genie space. Start with the Tracing Pipeline, then work through Evaluation and the Space Analyzer.
+:::
