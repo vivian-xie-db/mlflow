@@ -16,6 +16,87 @@ export type QUICKSTART_FLAVOR =
   | 'gemini'
   | 'custom';
 
+export const PYTHON_FRAMEWORK_OPTIONS: { key: QUICKSTART_FLAVOR; label: string }[] = [
+  { key: 'openai', label: 'OpenAI' },
+  { key: 'anthropic', label: 'Anthropic' },
+  { key: 'langchain', label: 'LangChain' },
+  { key: 'langgraph', label: 'LangGraph' },
+  { key: 'llama_index', label: 'LlamaIndex' },
+  { key: 'dspy', label: 'DSPy' },
+  { key: 'litellm', label: 'LiteLLM' },
+  { key: 'gemini', label: 'Gemini' },
+  { key: 'bedrock', label: 'Bedrock' },
+  { key: 'crewai', label: 'CrewAI' },
+  { key: 'autogen', label: 'AutoGen' },
+  { key: 'custom', label: 'Custom' },
+];
+
+export const TS_FRAMEWORK_OPTIONS: { key: string; label: string }[] = [
+  { key: 'openai', label: 'OpenAI' },
+  { key: 'custom', label: 'Custom' },
+];
+
+export const PYTHON_CONNECT_CODE = `import mlflow
+
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("my-experiment")`;
+
+export const TS_INSTALL_CODE = 'npm install mlflow-tracing';
+
+export const TS_CONNECT_CODE = `import * as mlflow from "mlflow-tracing";
+
+mlflow.init({
+  trackingUri: "http://localhost:5000",
+  experimentId: "<experiment-id>",
+});`;
+
+export const TS_FRAMEWORK_CODE: Record<string, { install: string; code: string }> = {
+  openai: {
+    install: 'npm install openai mlflow-openai',
+    code: `import { OpenAI } from "openai";
+import { traceOpenAI } from "mlflow-openai";
+
+// Initialize OpenAI client with automatic tracing
+const openai = traceOpenAI(
+  new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+);
+
+// All calls are automatically traced
+const completion = await openai.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: "What is MLflow?" },
+  ],
+});
+
+console.log(completion.choices[0].message);`,
+  },
+  custom: {
+    install: '',
+    code: `// Wrap any async function with mlflow.trace for automatic tracing
+const processRequest = mlflow.trace(
+  async (userInput: string) => {
+    // Your application logic here
+    const response = await callYourAPI(userInput);
+
+    // Log custom attributes
+    mlflow.setAttributes({
+      user_input_length: userInput.length,
+      response_type: typeof response
+    });
+
+    return response;
+  },
+  { name: 'process-user-request' }
+);
+
+// Use the traced function
+const result = await processRequest("Hello, MLflow!");
+console.log("Processed:", result);`,
+  },
+};
+
 export const QUICKSTART_CONTENT: Record<
   QUICKSTART_FLAVOR,
   {

@@ -384,8 +384,7 @@ const TracesV3LogsImpl = React.memo(
     const renderMainContent = () => {
       if (!enableTraceInsights && isTableEmpty) {
         return (
-          <>
-            <Spacer />
+          <div css={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
             <TracesV3EmptyState
               experimentIds={experimentIds}
               loggedModelId={loggedModelId}
@@ -415,7 +414,7 @@ const TracesV3LogsImpl = React.memo(
                 isFetchingNextPage={isFetchingNextPage}
               />
             </div>
-          </>
+          </div>
         );
       }
       // Default traces view with optional navigation
