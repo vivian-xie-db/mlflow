@@ -1190,6 +1190,10 @@
     "defaultMessage": "Cost",
     "description": "Label for the cost section"
   },
+  "62puUb": {
+    "defaultMessage": "Run your application and traces will appear here automatically. For more information, visit the <a>MLflow Tracing documentation</a>.",
+    "description": "Step 3 description for traces onboarding"
+  },
   "64SfR8": {
     "defaultMessage": "enter a model identifier",
     "description": "Link text to switch to direct model identifier input"
@@ -1405,6 +1409,10 @@
   "7FI4Hp": {
     "defaultMessage": "View full trace",
     "description": "Button to view a full trace within a chat session"
+  },
+  "7FcqHP": {
+    "defaultMessage": "Configure your Python environment to send traces to this MLflow server.",
+    "description": "Step 1 description for Python traces onboarding"
   },
   "7FvLl2": {
     "defaultMessage": "Ignore outliers",
@@ -3026,6 +3034,10 @@
     "defaultMessage": "Compare this run with other evaluation runs",
     "description": "Tooltip for the compare button on the run detail page"
   },
+  "HfHGT4": {
+    "defaultMessage": "Start tracing your LLM application",
+    "description": "Title for the empty state when no traces are recorded"
+  },
   "HfcIG/": {
     "defaultMessage": "Does the assistant follow the provided guidelines throughout the conversation?",
     "description": "Hint for ConversationalGuidelines template"
@@ -4213,6 +4225,10 @@
     "defaultMessage": "Clear selection",
     "description": "Clear model selection"
   },
+  "PYGkI3": {
+    "defaultMessage": "Install the <a>MLflow tracing SDK</a> for TypeScript using npm, then initialize it in your application.",
+    "description": "Step 1 description for TypeScript traces onboarding"
+  },
   "PZGZHV": {
     "defaultMessage": "Experiment ID",
     "description": "Label for displaying the current experiment in view"
@@ -4444,6 +4460,10 @@
   "R3TrL7": {
     "defaultMessage": "Provider",
     "description": "Provider label"
+  },
+  "R6dCZ5": {
+    "defaultMessage": "View your traces",
+    "description": "Step 3 title for traces onboarding"
   },
   "R7s1xC": {
     "defaultMessage": "Provider is required",
@@ -4955,6 +4975,10 @@
   "UbXw8O": {
     "defaultMessage": "Expectations",
     "description": "Label for the expectations section in the assessments pane"
+  },
+  "UbY9E3": {
+    "defaultMessage": "Choose your framework and add one line to enable automatic tracing, or use the {code} decorator for custom functions.",
+    "description": "Step 2 description for Python traces onboarding"
   },
   "Uf0z53": {
     "defaultMessage": "Cancel",
@@ -5502,6 +5526,14 @@
   "Y+bHa1": {
     "defaultMessage": "Scanning <tracesLink>{totalTraces} traces</tracesLink>, <issuesLink>{identifiedIssues} issues</issuesLink> identified so far",
     "description": "Issue detection progress > Progress summary while running"
+  },
+  "Y+dLul": {
+    "defaultMessage": "Choose your integration. Install the {code} package for automatic tracing, or use {trace} for custom functions.",
+    "description": "Step 2 description for TypeScript traces onboarding"
+  },
+  "Y+nCpQ": {
+    "defaultMessage": "Pending",
+    "description": "Label indicating this onboarding step is not yet completed"
   },
   "Y1eg9D": {
     "defaultMessage": "In progress",
@@ -7339,6 +7371,10 @@
     "defaultMessage": "Learn more",
     "description": "Learn more link text"
   },
+  "j/BF11": {
+    "defaultMessage": "Connect to the tracking server",
+    "description": "Step 1 title for Python traces onboarding"
+  },
   "j/pJM6": {
     "defaultMessage": "Last Modified",
     "description": "Label name for the last modified time under details tab on the model view page"
@@ -7434,6 +7470,10 @@
   "jhjCgW": {
     "defaultMessage": "Agent versions",
     "description": "Label for the agent versions tab in the MLflow experiment navbar"
+  },
+  "ji3A2G": {
+    "defaultMessage": "Install and initialize the MLflow TypeScript SDK",
+    "description": "Step 1 title for TypeScript traces onboarding"
   },
   "jiIft9": {
     "defaultMessage": "Settings",
@@ -7983,10 +8023,6 @@
     "defaultMessage": "Value",
     "description": "Field label for assessment value in a creation form"
   },
-  "msYDmK": {
-    "defaultMessage": "This tab displays all the traces logged to this {isRun, select, true {run} other {experiment}}. Follow the steps below to log your first trace. For more information about MLflow Tracing, visit the <a>MLflow documentation</a>.",
-    "description": "Message that explains the function of the 'Traces' tab in the MLflow UI. This message is followed by a tutorial explaining how to get started with MLflow Tracing."
-  },
   "msllnR": {
     "defaultMessage": "Datasets used",
     "description": "Label for the datasets used by a logged model on the logged model details page"
@@ -8306,6 +8342,10 @@
   "olpQcl": {
     "defaultMessage": "Model",
     "description": "Section title for model configuration"
+  },
+  "oooj//": {
+    "defaultMessage": "Select your development language",
+    "description": "Language selector heading for traces onboarding"
   },
   "opUoF8": {
     "defaultMessage": "Retrieval relevance",
@@ -9794,6 +9834,10 @@
   "ySuIn+": {
     "defaultMessage": "State",
     "description": "Column label for state"
+  },
+  "yWRwlk": {
+    "defaultMessage": "Traces show you how your LLM calls behave: what they cost, how they perform, and where things go wrong. Get started in a few minutes.",
+    "description": "Subtitle for the empty state when no traces are recorded"
   },
   "ydoHrJ": {
     "defaultMessage": "Output",
