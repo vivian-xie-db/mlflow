@@ -54,10 +54,10 @@ export const TS_FRAMEWORK_CODE: Record<string, { install: string; code: string }
   openai: {
     install: 'npm install openai mlflow-openai',
     code: `import { OpenAI } from "openai";
-import { traceOpenAI } from "mlflow-openai";
+import { tracedOpenAI } from "mlflow-openai";
 
 // Initialize OpenAI client with automatic tracing
-const openai = traceOpenAI(
+const openai = tracedOpenAI(
   new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 );
 
