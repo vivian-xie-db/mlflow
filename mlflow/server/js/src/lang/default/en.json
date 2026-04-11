@@ -1298,10 +1298,6 @@
     "defaultMessage": "Delete",
     "description": "Gateway > Endpoints list > Delete button"
   },
-  "6d5JTO": {
-    "defaultMessage": "No traces recorded",
-    "description": "Message displayed when there are no traces logged to the experiment"
-  },
   "6ejdmD": {
     "defaultMessage": "Requests",
     "description": "Title for the requests chart in gateway"
@@ -7082,6 +7078,10 @@
   "hP8kyS": {
     "defaultMessage": "Delete ({count})",
     "description": "Gateway > Endpoints list > Delete button with count"
+  },
+  "hPDXO7": {
+    "defaultMessage": "Add tracing to your application",
+    "description": "Step 2 title for traces onboarding"
   },
   "hR27A2": {
     "defaultMessage": "View full dashboard",
