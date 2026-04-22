@@ -1,13 +1,11 @@
-import type { ThemeType } from '@databricks/design-system';
+import { SegmentedControlButton, SegmentedControlGroup } from '@databricks/design-system';
 
 export type Language = 'python' | 'typescript';
 
 export const LanguageTab = ({
-  theme,
   language,
   setLanguage,
 }: {
-  theme: ThemeType;
   language: Language;
   setLanguage: (lang: Language) => void;
 }) => {
@@ -17,33 +15,17 @@ export const LanguageTab = ({
   ];
 
   return (
-    <div
-      css={{
-        display: 'inline-flex',
-        borderRadius: theme.borders.borderRadiusMd,
-        border: `1px solid ${theme.colors.border}`,
-        overflow: 'hidden',
-      }}
+    <SegmentedControlGroup
+      name="mlflow.traces.onboarding.language-selector"
+      componentId="mlflow.traces.onboarding.language_selector"
+      value={language}
+      onChange={(event) => setLanguage(event.target.value as Language)}
     >
       {tabs.map(({ key, label }) => (
-        <button
-          key={key}
-          onClick={() => setLanguage(key)}
-          css={{
-            padding: `${theme.spacing.xs + 2}px ${theme.spacing.md}px`,
-            border: 'none',
-            backgroundColor: language === key ? theme.colors.actionPrimaryBackgroundDefault : 'transparent',
-            color: language === key ? '#fff' : theme.colors.textSecondary,
-            fontSize: 13,
-            fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            ':hover': language !== key ? { backgroundColor: theme.colors.actionIconBackgroundHover } : {},
-          }}
-        >
+        <SegmentedControlButton key={key} value={key}>
           {label}
-        </button>
+        </SegmentedControlButton>
       ))}
-    </div>
+    </SegmentedControlGroup>
   );
 };

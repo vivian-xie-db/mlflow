@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { Typography, useDesignSystemTheme } from '@databricks/design-system';
+import {
+  SegmentedControlButton,
+  SegmentedControlGroup,
+  Typography,
+  useDesignSystemTheme,
+} from '@databricks/design-system';
 import { FormattedMessage } from 'react-intl';
 
 import {
   QUICKSTART_CONTENT,
   PYTHON_FRAMEWORK_OPTIONS,
   TS_FRAMEWORK_OPTIONS,
-  PYTHON_CONNECT_CODE,
+  getPythonConnectCode,
   TS_INSTALL_CODE,
-  TS_CONNECT_CODE,
+  getTsConnectCode,
   TS_FRAMEWORK_CODE,
   type QUICKSTART_FLAVOR,
 } from './TraceTableQuickstart.utils';
@@ -19,14 +24,23 @@ import demoVideo from '@mlflow/mlflow/src/common/static/videos/demo-experiment.m
 
 export const TracesViewTableNoTracesQuickstart = ({
   baseComponentId,
+  experimentName,
+  experimentId,
 }: {
   baseComponentId: string;
   runUuid?: string;
+  experimentName?: string;
+  experimentId?: string;
 }) => {
   const { theme } = useDesignSystemTheme();
   const [language, setLanguage] = useState<Language>('python');
   const [selectedPythonFramework, setSelectedPythonFramework] = useState<QUICKSTART_FLAVOR>('openai');
   const [selectedTsFramework, setSelectedTsFramework] = useState<string>('openai');
+
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+  const trackingUri = `http://${hostname}:<port>`;
+  const pythonConnectCode = getPythonConnectCode(trackingUri, experimentName || 'my-experiment');
+  const tsConnectCode = getTsConnectCode(trackingUri, experimentId || '<experiment-id>');
 
   const pythonCode = QUICKSTART_CONTENT[selectedPythonFramework].getCodeSource();
   const tsFramework = TS_FRAMEWORK_CODE[selectedTsFramework];
@@ -92,12 +106,17 @@ export const TracesViewTableNoTracesQuickstart = ({
             description="Language selector heading for traces onboarding"
           />
         </Typography.Title>
-        <LanguageTab theme={theme} language={language} setLanguage={setLanguage} />
+        <LanguageTab language={language} setLanguage={setLanguage} />
       </div>
 
       {/* Steps */}
       <div css={{ width: '100%', display: 'flex', flexDirection: 'column', gap: theme.spacing.lg * 1.5 }}>
-        <ConnectStep theme={theme} language={language} />
+        <ConnectStep
+          theme={theme}
+          language={language}
+          pythonConnectCode={pythonConnectCode}
+          tsConnectCode={tsConnectCode}
+        />
         <InstrumentStep
           theme={theme}
           language={language}
@@ -119,9 +138,13 @@ export const TracesViewTableNoTracesQuickstart = ({
 const ConnectStep = ({
   theme,
   language,
+  pythonConnectCode,
+  tsConnectCode,
 }: {
   theme: ReturnType<typeof useDesignSystemTheme>['theme'];
   language: Language;
+  pythonConnectCode: string;
+  tsConnectCode: string;
 }) => {
   return (
     <StepSection
@@ -154,7 +177,7 @@ const ConnectStep = ({
               a: (text: string) => (
                 <Typography.Link
                   componentId="mlflow.traces.onboarding.npm_link"
-                  href="https://www.npmjs.com/package/mlflow-tracing"
+                  href="https://www.npmjs.com/package/@mlflow/core"
                   openInNewTab
                 >
                   {text}
@@ -168,7 +191,7 @@ const ConnectStep = ({
       {language === 'python' ? (
         <CodeBlock
           theme={theme}
-          code={PYTHON_CONNECT_CODE}
+          code={pythonConnectCode}
           language="python"
           componentId="mlflow.traces.onboarding.step1.copy"
         />
@@ -182,7 +205,7 @@ const ConnectStep = ({
           />
           <CodeBlock
             theme={theme}
-            code={TS_CONNECT_CODE}
+            code={tsConnectCode}
             language="typescript"
             componentId="mlflow.traces.onboarding.step1.connect.copy"
           />
@@ -241,7 +264,7 @@ const InstrumentStep = ({
             defaultMessage="Choose your integration. Install the {code} package for automatic tracing, or use {trace} for custom functions."
             description="Step 2 description for TypeScript traces onboarding"
             values={{
-              code: <code css={codeStyle}>mlflow-openai</code>,
+              code: <code css={codeStyle}>@mlflow/openai</code>,
               trace: <code css={codeStyle}>mlflow.trace()</code>,
             }}
           />
@@ -249,33 +272,19 @@ const InstrumentStep = ({
       }
     >
       {/* Framework selector */}
-      <div css={{ display: 'flex', flexWrap: 'wrap', gap: theme.spacing.xs, marginBottom: theme.spacing.sm }}>
-        {frameworkOptions.map(({ key, label }) => {
-          const isSelected = selectedFramework === key;
-          return (
-            <button
-              key={key}
-              onClick={() => onSelectFramework(key)}
-              css={{
-                padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-                borderRadius: theme.borders.borderRadiusMd,
-                border: `1px solid ${isSelected ? theme.colors.actionPrimaryBackgroundDefault : theme.colors.border}`,
-                backgroundColor: isSelected ? `${theme.colors.actionPrimaryBackgroundDefault}10` : 'transparent',
-                color: isSelected ? theme.colors.actionPrimaryBackgroundDefault : theme.colors.textSecondary,
-                fontSize: 12,
-                fontWeight: isSelected ? 600 : 400,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-                ':hover': {
-                  borderColor: theme.colors.actionPrimaryBackgroundDefault,
-                  color: theme.colors.actionPrimaryBackgroundDefault,
-                },
-              }}
-            >
+      <div css={{ marginBottom: theme.spacing.sm }}>
+        <SegmentedControlGroup
+          name="mlflow.traces.onboarding.framework-selector"
+          componentId="mlflow.traces.onboarding.framework_selector"
+          value={selectedFramework}
+          onChange={(event) => onSelectFramework(event.target.value)}
+        >
+          {frameworkOptions.map(({ key, label }) => (
+            <SegmentedControlButton key={key} value={key}>
               {label}
-            </button>
-          );
-        })}
+            </SegmentedControlButton>
+          ))}
+        </SegmentedControlGroup>
       </div>
 
       {language === 'python' ? (

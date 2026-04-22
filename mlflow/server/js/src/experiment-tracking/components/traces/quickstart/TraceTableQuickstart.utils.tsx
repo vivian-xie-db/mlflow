@@ -36,41 +36,41 @@ export const TS_FRAMEWORK_OPTIONS: { key: string; label: string }[] = [
   { key: 'custom', label: 'Custom' },
 ];
 
-export const PYTHON_CONNECT_CODE = `import mlflow
+export const getPythonConnectCode = (trackingUri: string, experimentName: string) =>
+  `import mlflow
 
-mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("my-experiment")`;
+# Specify the tracking server URI, e.g. http://localhost:5000
+mlflow.set_tracking_uri("${trackingUri}")
+mlflow.set_experiment("${experimentName}")`;
 
-export const TS_INSTALL_CODE = 'npm install mlflow-tracing';
+export const TS_INSTALL_CODE = 'npm install @mlflow/core';
 
-export const TS_CONNECT_CODE = `import * as mlflow from "mlflow-tracing";
+export const getTsConnectCode = (trackingUri: string, experimentId: string) =>
+  `import * as mlflow from '@mlflow/core';
 
 mlflow.init({
-  trackingUri: "http://localhost:5000",
-  experimentId: "<experiment-id>",
+  // Specify the tracking server URI, e.g. http://localhost:5000
+  trackingUri: '${trackingUri}',
+  experimentId: '${experimentId}',
 });`;
 
 export const TS_FRAMEWORK_CODE: Record<string, { install: string; code: string }> = {
   openai: {
-    install: 'npm install openai mlflow-openai',
-    code: `import { OpenAI } from "openai";
-import { tracedOpenAI } from "mlflow-openai";
+    install: 'npm install @mlflow/openai',
+    code: `import { OpenAI } from 'openai';
+import { tracedOpenAI } from '@mlflow/openai';
 
-// Initialize OpenAI client with automatic tracing
-const openai = tracedOpenAI(
-  new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-);
+// Wrap the OpenAI client with the tracedOpenAI function
+const client = tracedOpenAI(new OpenAI());
 
-// All calls are automatically traced
-const completion = await openai.chat.completions.create({
-  model: "gpt-4o-mini",
+// Invoke the client as usual
+const response = await client.chat.completions.create({
+  model: 'o4-mini',
   messages: [
-    { role: "system", content: "You are a helpful assistant." },
-    { role: "user", content: "What is MLflow?" },
+    { role: 'system', content: 'You are a helpful weather assistant.' },
+    { role: 'user', content: "What's the weather like in Seattle?" },
   ],
-});
-
-console.log(completion.choices[0].message);`,
+});`,
   },
   custom: {
     install: '',

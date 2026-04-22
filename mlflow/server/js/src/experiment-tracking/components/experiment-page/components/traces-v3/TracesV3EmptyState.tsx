@@ -107,5 +107,11 @@ export const TracesV3EmptyState = (props: {
       />
     );
   }
-  return <TracesViewTableNoTracesQuickstart baseComponentId="mlflow.traces" />;
+  return (
+    <TracesViewTableNoTracesQuickstart
+      baseComponentId="mlflow.traces"
+      experimentName={experiment?.name ?? undefined}
+      experimentId={experiment?.experimentId ?? undefined}
+    />
+  );
 };
