@@ -54,7 +54,7 @@ mlflow.init({
   experimentId: '${experimentId}',
 });`;
 
-export const TS_FRAMEWORK_CODE: Record<string, { install: string; code: string }> = {
+export const TS_FRAMEWORK_CODE = {
   openai: {
     install: 'npm install @mlflow/openai',
     code: `import { OpenAI } from 'openai';
@@ -95,7 +95,7 @@ const processRequest = mlflow.trace(
 const result = await processRequest("Hello, MLflow!");
 console.log("Processed:", result);`,
   },
-};
+} satisfies Record<string, { install: string; code: string }>;
 
 export const QUICKSTART_CONTENT: Record<
   QUICKSTART_FLAVOR,
